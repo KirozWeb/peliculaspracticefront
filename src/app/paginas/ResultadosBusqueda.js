@@ -1,8 +1,8 @@
 import { useState ,useEffect} from 'react';
 import Resultados from '../componentes/Resultados.js';
 import '../estilos/resultados-busqueda.css';
-import peliculasDB from '../../peliculas150.json';
-
+//import peliculasDB from '../../peliculas150.json';
+import * as PeliculasService from '../servicios/PeliculasService';
 
 function ResultadosBusqueda(){
 
@@ -20,10 +20,14 @@ function ResultadosBusqueda(){
          * SE RECOMIENDA CONECTAR LAS APIS AQUI EN LOS EFECTOS Y
          * LLAMAR A LA BASE DE DATOS
          */
-        let ResultadosBusqueda = peliculasDB.slice(0,busqueda.length);
-        setResultados(ResultadosBusqueda);
-        return () =>{
-            //ACCIONES DE DESMONTAJE
+        if(busqueda.length >= 4){
+            PeliculasService.servicioBusquedaTitulo(busqueda)
+                .then(function(ResultadosBusqueda){
+                    setResultados(ResultadosBusqueda.data);
+                });
+        }
+        else{
+            setResultados([]);
         }
         
     },[busqueda])

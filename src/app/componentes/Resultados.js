@@ -1,13 +1,14 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faStarHalfAlt} from '@fortawesome/free-solid-svg-icons';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import '../estilos/resultados.css';
 
 function Resultados(props){
 
+    let history = useHistory();
+
     function handleClick(evento){
-        evento.preventDefault();
-        evento.stopPropagation();
-        alert("Redireccionar al detalle de la pelicula");
+        history.push("/detalle/" + props.pelicula._id);
     }
     return(
         <>
