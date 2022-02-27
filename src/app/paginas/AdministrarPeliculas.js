@@ -1,4 +1,7 @@
+import ListarPeliculas from "../componentes/ListarPeliculas";
+
 export default function AdministrarPeliculas(){
+    let contador = 0;
     return(
         <>
             <fieldset>
@@ -8,6 +11,7 @@ export default function AdministrarPeliculas(){
                 </fieldset>
                <fieldset>
                     <legend>Lista Peliculas</legend>
+                    <ListarPeliculas contador = {contador}/>
                </fieldset> 
             </fieldset>
         </>
