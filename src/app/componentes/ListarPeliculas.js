@@ -6,14 +6,15 @@ import {Button} from 'react-bootstrap';
 
 export default function ListarPeliculas(props){
 
-    const [peliculas, setPeliculas] = useState([]);
+    //const [peliculas, setPeliculas] = useState([]);
 
+     
 
     useEffect(()=>{
         //CARGAR TODAS LAS PELICULAS
         PeliculasService.servicioBusquedaPeliculas()
             .then(function(resultadosBusqueda){
-                setPeliculas(resultadosBusqueda.data);
+                props.setPeliculas(resultadosBusqueda.data);
             })
             .catch(function(error){
                 console.log(error);
@@ -32,13 +33,15 @@ export default function ListarPeliculas(props){
         
           switch(buton){
                 case 'btnEditar':
+                    props.onClickEditar(idPelicula);
+                    
                 break;
 
                 case 'btnEliminar':
                     PeliculasService.servicioEliminarPelicula(idPelicula)
                         .then(function(resultadoEliminacion){
                             if(resultadoEliminacion.datos.acknowledged){
-                                setPeliculas(peliculasActual => (
+                                props.setPeliculas(peliculasActual => (
                                     peliculasActual.filter(pelicula => pelicula._id !== idPelicula)
                                 ));
                             }
@@ -73,11 +76,11 @@ export default function ListarPeliculas(props){
                             </tr>
                         </thead>
                         <tbody>
-                            {peliculas && peliculas.map((pelicula,indice) =>(
+                            {props.peliculas && props.peliculas.map((pelicula,indice) =>(
                                 
                                     
                                 
-                                <tr key={pelicula._id} variant="blue">
+                                <tr key={pelicula._id}>
                                     <td>{indice+1}</td>
                                     <td>{pelicula.titulo}</td>
                                     <td>{pelicula.ano}</td>
